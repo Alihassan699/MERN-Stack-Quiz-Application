@@ -25,7 +25,7 @@ const SignIn: React.FC<SignInProps> = ({ onAuthenticate }) => {
     };
 
     return (
-        <div id="form" className="signin-container">
+        <div className="sign-in-container">
             <h2>Sign In</h2>
             <form onSubmit={handleSignIn}>
                 <input
@@ -33,17 +33,21 @@ const SignIn: React.FC<SignInProps> = ({ onAuthenticate }) => {
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="userid"
+                    className="form-input"
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    id="input1"
+                    className="form-input"
                 />
-                <button type="submit" className="btn">Sign In</button>
+                <button type="submit">Sign In</button>
             </form>
+            <div className="error-message"> {/* Error message styling can be used here if needed */}</div>
+            <div className="sign-up-link">
+                <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+            </div>
         </div>
     );
 };

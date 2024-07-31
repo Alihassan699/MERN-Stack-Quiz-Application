@@ -1,38 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import axiosInstance from '../axiosInstance';
-import { useParams } from 'react-router-dom';
+// /src/components/ResultComponent.tsx
+import React from 'react';
 import '../styles/ResultComponent.css';
 
-const ResultComponent: React.FC = () => {
-    const { quizId } = useParams<{ quizId: string }>();
-    const [result, setResult] = useState<any>(null);
+interface ResultProps {
+    score: number;
+    totalQuestions: number;
+    correctAnswers: number;
+}
 
-    useEffect(() => {
-        const fetchResult = async () => {
-            try {
-                const response = await axiosInstance.get(`/results/${quizId}`);
-                setResult(response.data);
-            } catch (error) {
-                console.error('Error fetching result:', error);
-            }
-        };
-
-        fetchResult();
-    }, [quizId]);
-
+const ResultComponent: React.FC<ResultProps> = ({ score, totalQuestions, correctAnswers }) => {
     return (
-        <div className="container">
-            <h2>Quiz Result</h2>
-            {result ? (
-                <div>
-                    <p>Total Questions: {result.totalQuestions}</p>
-                    <p>Attempted Questions: {result.attemptedQuestions}</p>
-                    <p>Correct Answers: {result.correctAnswered}</p>
-                    <p>Wrong Answers: {result.wrongAnswered}</p>
-                </div>
-            ) : (
-                <p>Loading result...</p>
-            )}
+        <div className="result-container">
+            <h2>Quiz Results</h2>
+            <p>Total Questions: {totalQuestions}</p>
+            <p>Correct Answers: {correctAnswers}</p>
+            <p>Your Score: {score}</p>
         </div>
     );
 };

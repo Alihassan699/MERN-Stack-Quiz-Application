@@ -11,6 +11,7 @@ const SignUp: React.FC<SignUpProps> = ({ onAuthenticate }) => {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSignUp = async (e: React.FormEvent) => {
@@ -23,11 +24,12 @@ const SignUp: React.FC<SignUpProps> = ({ onAuthenticate }) => {
             navigate('/user');
         } catch (error) {
             console.error('Error signing up:', error);
+            setError('Failed to sign up. Please try again.');
         }
     };
 
     return (
-        <div id="form" className="signup-container">
+        <div className="sign-up-container">
             <h2>Sign Up</h2>
             <form onSubmit={handleSignUp}>
                 <input
@@ -35,24 +37,22 @@ const SignUp: React.FC<SignUpProps> = ({ onAuthenticate }) => {
                     placeholder="Full Name"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="userid"
                 />
                 <input
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="userid"
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    id="input1"
                 />
-                <button type="submit" className="btn">Sign Up</button>
+                <button type="submit">Sign Up</button>
             </form>
+            {error && <div className="error-message">{error}</div>}
         </div>
     );
 };
