@@ -1,0 +1,14 @@
+/* src/styles/global.css */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    input[type="text"], button {
+        width: 100%;
+    }
+
+    .quiz-container {
+        padding: 10px;
+    }
+}

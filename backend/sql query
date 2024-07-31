@@ -1,0 +1,60 @@
+-- User Table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    fullName VARCHAR(255)
+);
+
+-- Result Table
+CREATE TABLE results (
+    id SERIAL PRIMARY KEY,
+    total_questions INTEGER,
+    attempted_questions INTEGER,
+    correct_answered INTEGER,
+    wrong_answered INTEGER
+);
+
+-- Quiz Table
+CREATE TABLE quizzes (
+    id SERIAL PRIMARY KEY,
+    result INTEGER,
+    CONSTRAINT fk_result
+      FOREIGN KEY (result)
+      REFERENCES results (id)
+);
+
+-- Question Table
+CREATE TABLE questions (
+    id SERIAL PRIMARY KEY,
+    statement TEXT NOT NULL,
+    options TEXT[],
+    correct_answer TEXT NOT NULL
+);
+
+-- UserQuizzes Table
+CREATE TABLE user_quizzes (
+    user_id INTEGER,
+    quiz_id INTEGER,
+    PRIMARY KEY (user_id, quiz_id),
+    CONSTRAINT fk_user
+      FOREIGN KEY (user_id)
+      REFERENCES users (id),
+    CONSTRAINT fk_quiz
+      FOREIGN KEY (quiz_id)
+      REFERENCES quizzes (id)
+);
+
+-- QuizQuestions Table
+CREATE TABLE quiz_questions (
+    quiz_id INTEGER,
+    question_id INTEGER,
+    PRIMARY KEY (quiz_id, question_id),
+    CONSTRAINT fk_quiz
+      FOREIGN KEY (quiz_id)
+      REFERENCES quizzes (id),
+    CONSTRAINT fk_question
+      FOREIGN KEY (question_id)
+      REFERENCES questions (id)
+);
