@@ -1,50 +1,49 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
+import { useNavigate } from 'react-router-dom';
 import '../styles/SignIn.css';
 
 interface SignInProps {
-    onAuthenticate: (status: boolean) => void;
+    onAuthenticate: (authenticated: boolean) => void;
 }
 
 const SignIn: React.FC<SignInProps> = ({ onAuthenticate }) => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSignIn = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/signin', { username, password });
-            localStorage.setItem('token', response.data.token); // Store token in local storage
-            onAuthenticate(true); // Update authentication status
-        } catch (err) {
-            setError('Invalid username or password');
+            const response = await axiosInstance.post('/auth/signin', { email, password });
+            localStorage.setItem('token', response.data.token);
+            onAuthenticate(true);
+            navigate('/user');
+        } catch (error) {
+            console.error('Error signing in:', error);
         }
     };
 
     return (
-        <div className="sign-in-container">
+        <div id="form" className="signin-container">
             <h2>Sign In</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSignIn}>
                 <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="userid"
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    id="input1"
                 />
-                <button type="submit">Sign In</button>
-                {error && <p className="error-message">{error}</p>}
+                <button type="submit" className="btn">Sign In</button>
             </form>
-            <p className="sign-up-link">
-                Don't have an account? <Link to="/signup">Sign Up</Link>
-            </p>
         </div>
     );
 };

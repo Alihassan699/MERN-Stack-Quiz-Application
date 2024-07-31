@@ -1,4 +1,3 @@
-// src/components/AdminComponent.tsx
 import React, { useState } from 'react';
 import axiosInstance from '../axiosInstance';
 import '../styles/AdminComponent.css';

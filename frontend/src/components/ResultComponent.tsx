@@ -1,4 +1,3 @@
-// src/components/ResultComponent.tsx
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axiosInstance';
 import { useParams } from 'react-router-dom';
@@ -22,7 +21,7 @@ const ResultComponent: React.FC = () => {
     }, [quizId]);
 
     return (
-        <div className="result-container">
+        <div className="container">
             <h2>Quiz Result</h2>
             {result ? (
                 <div>

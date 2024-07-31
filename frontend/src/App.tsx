@@ -1,5 +1,4 @@
-// src/App.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import AdminComponent from './components/AdminComponent';
@@ -12,24 +11,29 @@ import './App.css';
 
 // Function to check if the user is authenticated
 const isAuthenticated = () => {
-    // Replace this with your actual authentication logic
     return !!localStorage.getItem('token');
 };
 
 const App: React.FC = () => {
+    const [authenticated, setAuthenticated] = useState(isAuthenticated());
+
+    useEffect(() => {
+        setAuthenticated(isAuthenticated());
+    }, []);
+
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/signup" element={<SignUp />} />
+                <Route path="/signin" element={<SignIn onAuthenticate={setAuthenticated} />} />
+                <Route path="/signup" element={<SignUp onAuthenticate={setAuthenticated} />} />
                 <Route
                     path="/admin"
-                    element={isAuthenticated() ? <AdminComponent /> : <Navigate to="/signin" />}
+                    element={authenticated ? <AdminComponent /> : <Navigate to="/signin" />}
                 />
                 <Route
                     path="/user"
-                    element={isAuthenticated() ? <UserComponent /> : <Navigate to="/signin" />}
+                    element={authenticated ? <UserComponent /> : <Navigate to="/signin" />}
                 />
                 <Route path="/quiz/:quizId" element={<QuizComponent />} />
                 <Route path="/result/:quizId" element={<ResultComponent />} />

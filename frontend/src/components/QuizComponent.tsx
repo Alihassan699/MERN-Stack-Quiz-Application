@@ -1,4 +1,3 @@
-// src/components/QuizComponent.tsx
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axiosInstance';
 import { useParams, useNavigate } from 'react-router-dom';

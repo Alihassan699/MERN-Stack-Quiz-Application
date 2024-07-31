@@ -1,4 +1,3 @@
-// src/components/HomePage.tsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/HomePage.css';
@@ -7,7 +6,7 @@ const HomePage: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="home-container">
+        <div className="container">
             <h1>Welcome to the Quiz App</h1>
             <div className="home-buttons">
                 <Link to="/signin">
