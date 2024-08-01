@@ -23,7 +23,7 @@ const SignUp: React.FC<SignUpProps> = ({ onAuthenticate }) => {
             localStorage.setItem('token', response.data.token);
             onAuthenticate(true);
             navigate('/user');
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error signing up:', error);
             setError('Failed to sign up. Please try again.');
         }
@@ -38,28 +38,32 @@ const SignUp: React.FC<SignUpProps> = ({ onAuthenticate }) => {
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    className="form-input"
                 />
                 <input
                     type="text"
                     placeholder="Full Name"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
+                    className="form-input"
                 />
                 <input
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className="form-input"
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className="form-input"
                 />
                 <button type="submit">Sign Up</button>
+                {error && <div className="error-message">{error}</div>}
             </form>
-            {error && <div className="error-message">{error}</div>}
         </div>
     );
 };

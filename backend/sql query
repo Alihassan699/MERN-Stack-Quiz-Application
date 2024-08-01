@@ -6,6 +6,13 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     fullName VARCHAR(255)
 );
+--Password reset Table
+CREATE TABLE password_resets (
+    user_id INTEGER PRIMARY KEY,
+    otp VARCHAR(255) NOT NULL,
+    expires BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
 -- Result Table
 CREATE TABLE results (

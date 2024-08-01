@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axiosInstance from '../axiosInstance';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../styles/SignIn.css';
 
 interface SignInProps {
@@ -10,6 +10,7 @@ interface SignInProps {
 const SignIn: React.FC<SignInProps> = ({ onAuthenticate }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSignIn = async (e: React.FormEvent) => {
@@ -19,8 +20,9 @@ const SignIn: React.FC<SignInProps> = ({ onAuthenticate }) => {
             localStorage.setItem('token', response.data.token);
             onAuthenticate(true);
             navigate('/user');
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error signing in:', error);
+            setError('Invalid credentials');
         }
     };
 
@@ -43,10 +45,13 @@ const SignIn: React.FC<SignInProps> = ({ onAuthenticate }) => {
                     className="form-input"
                 />
                 <button type="submit">Sign In</button>
+                {error && <div className="error-message">{error}</div>}
             </form>
-            <div className="error-message"> {/* Error message styling can be used here if needed */}</div>
             <div className="sign-up-link">
-                <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+                <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+            </div>
+            <div className="forgot-password-link">
+                <p>Forgot your password? <Link to="/request-password-reset">Reset Password</Link></p>
             </div>
         </div>
     );

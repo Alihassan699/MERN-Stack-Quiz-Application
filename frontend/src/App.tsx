@@ -7,9 +7,10 @@ import QuizComponent from './components/QuizComponent';
 import ResultComponent from './components/ResultComponent';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import PasswordResetRequest from './components/PasswordResetRequest';
+import PasswordReset from './components/PasswordReset';
 import './App.css';
 
-// Function to check if the user is authenticated
 const isAuthenticated = () => {
     return !!localStorage.getItem('token');
 };
@@ -27,16 +28,12 @@ const App: React.FC = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/signin" element={<SignIn onAuthenticate={setAuthenticated} />} />
                 <Route path="/signup" element={<SignUp onAuthenticate={setAuthenticated} />} />
-                <Route
-                    path="/admin"
-                    element={authenticated ? <AdminComponent /> : <Navigate to="/signin" />}
-                />
-                <Route
-                    path="/user"
-                    element={authenticated ? <UserComponent /> : <Navigate to="/signin" />}
-                />
-                <Route path="/quiz/:quizId" element={<QuizComponent />} />
-                <Route path="/result/:quizId" element={<ResultComponent />} />
+                <Route path="/request-password-reset" element={<PasswordResetRequest />} />
+                <Route path="/reset-password/:email" element={<PasswordReset />} />
+                <Route path="/admin" element={authenticated ? <AdminComponent /> : <Navigate to="/signin" />} />
+                <Route path="/user" element={authenticated ? <UserComponent /> : <Navigate to="/signin" />} />
+                <Route path="/quiz" element={authenticated ? <QuizComponent /> : <Navigate to="/signin" />} />
+                <Route path="/result" element={authenticated ? <ResultComponent /> : <Navigate to="/signin" />} />
             </Routes>
         </Router>
     );
