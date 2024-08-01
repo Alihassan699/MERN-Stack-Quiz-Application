@@ -1,4 +1,3 @@
-// app.js
 import express from 'express';
 import bodyParser from 'body-parser';
 import { connectdb } from './config/db.js';

@@ -8,6 +8,7 @@ interface SignUpProps {
 }
 
 const SignUp: React.FC<SignUpProps> = ({ onAuthenticate }) => {
+    const [username, setUsername] = useState('');
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,7 +18,7 @@ const SignUp: React.FC<SignUpProps> = ({ onAuthenticate }) => {
     const handleSignUp = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axiosInstance.post('/auth/signup', { fullName, email, password });
+            await axiosInstance.post('/auth/signup', { username, fullName, email, password });
             const response = await axiosInstance.post('/auth/signin', { email, password });
             localStorage.setItem('token', response.data.token);
             onAuthenticate(true);
@@ -32,6 +33,12 @@ const SignUp: React.FC<SignUpProps> = ({ onAuthenticate }) => {
         <div className="sign-up-container">
             <h2>Sign Up</h2>
             <form onSubmit={handleSignUp}>
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
                 <input
                     type="text"
                     placeholder="Full Name"
